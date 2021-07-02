@@ -1,0 +1,86 @@
+CORREZIONE
+
+Modellizzare la struttura di una tabella per memorizzare tutti i dati riguardanti delle auto usate messe in vendita da un concessionario.
+
+
+colonna   -   tipo    -    attributi    -    indici
+
+id - INT - AUTOINCREMENT, (default. NOTNULL, UNIQUE) - PRIMARY KEY
+
+brand - VARCHAR(20) - NOTNULL - INDEX
+model - VARCHAR(50) - NOTNULL - INDEX
+year - YEAR - NOTNULL - INDEX
+power_supply - VARCHAR(20) - NOTNULL
+gear - VARCHAR(20) - NULL (non fondamentale, inseribile in un secondo momento)
+cc - VARCHAR(5) - NOTNULL
+
+[numero di telefono? VARCHAR! puo iniziare con lo 0! a differenza degli INT!]
+[anche per il formato "mese/anno"]
+
+horsepower - VARCHAR(5) - NULL
+km - MEDIUMINT - NOTNULL - INDEX
+is_new - TINYINT - DEFAULT 0 [booleano che ci dice "è nuova?"]
+seats - TINIINT - NULL
+doors - TINYINT - NULL
+color - VARCHAR(30) - NULL
+price - FLOAT(9,2) - NOTNULL - INDEX
+
+[INDEX - x velocizzare la ricerca!]
+
+--- --- --- Più di una tabella --- --- ---
+come creo una relazione tra tabelle?
+3 tipi...
+
+- uno a molti
+- uno a uno
+- molti a molti
+
+Diagramma ER (Entity Relationship) - rappresentazione grafica del DB
+
+cardinalità:
+*=> qualsiasi numero, zero o più
+1 => uno
+(ignorabile) 1..*=> da uno a qualsiasi numero
+
+come colleghiamo le tabelle? - FOREIGN KEY!
+in quale tabella inserisco la FOREIGN KEY???
+--- --- ---
+
+books -- book_id (plurale -- singolare_id)
+one   -- many
+
+--- --- ---
+nella uno a molti:
+la foreign si inserisce nella tabella molti
+(libro è primario molti e tabella "dipendente")
+--- --- ---
+
+PAUSA
+
+--- --- ---
+uno a uno (meno utilizzata)
+
+dipendenti -- dettagli_dipendente
+
+un dipendente è legato ad una sola tabella dettagli (numero di telefono, residenza, email...)
+
+la foreign key va sempre nella tabella secondaria
+come per la uno a molti
+
+
+--- --- ---
+molti a molti
+la foreign key???
+
+tabella ponte! una nuova tabella!
+e gestiamo solo l'accoppiamento!
+
+films / actors
+--> tabella ponte (film_actor)
+film_id / actor_id
+WARNING
+come chiave primaria della tabella ponte uso o una colonna id oppure la coppia di colonne (film_id / actor_id)
+
+--- --- ---
+
+diagrams.net
