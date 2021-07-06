@@ -15,6 +15,10 @@ laurea (286)
 SELECT `name`, `surname`, `date_of_birth`
 FROM `students`
 WHERE `date_of_birth` LIKE '1990-%-%';
+CORREZIONE ---
+SELECT *
+FROM `students`
+WHERE YEAR (`date_of_birth`) = 1990;
 
 2 ---
 SELECT `name`, `cfu`
@@ -25,6 +29,9 @@ WHERE `cfu` > 10;
 SELECT `name`, `surname`, `date_of_birth`
 FROM `students`
 WHERE `date_of_birth` < '1991-01-01';
+CORREZIONE ---
+FROM `students`;
+WHERE TIMESTAMPDIFF(YEAR, `date_of_birth`, CURDATE()) = 29
 
 4 ---
 SELECT `name`, `period`, `year`
@@ -37,6 +44,9 @@ SELECT *
 FROM `exams`
 WHERE `date` = '2020-06-20'
 AND `hour` >= '14:00:00';
+CORREZIONE ---
+...
+AND HOUR (`hour`) >= 14;
 
 6 ---
 SELECT `name` `level`
