@@ -12,7 +12,8 @@ superare ciascuno dei suoi esami
 SELECT `students`.`name`, `students`.`surname`, `degrees`.`name` AS degree
 FROM `students`
 INNER JOIN `degrees`
-ON `degrees`.`name` = 'Corso di Laurea in Economia';
+ON `students`.`degree_id` = `degrees`.`id`
+WHERE `degrees`.`name` = 'Corso di Laurea in Economia';
 
 2 ---
 SELECT `courses`.*
@@ -25,6 +26,15 @@ ON `degrees`.`id` = `departments`.`id`
 
 WHERE `departments`.`name` = 'Dipartimento di Neuroscienze';
 
+CORREZIONE --- --- ---
+SELECT `degrees`.*
+FROM `degrees`
+
+INNER JOIN `department`
+ON `degrees`.`department_id` = `departments`.`id`
+
+WHERE `departments`.`name` = 'Dipartimento di Neuroscienze';
+
 3 ---
 SELECT `courses`.*
 FROM `courses`
@@ -32,6 +42,18 @@ INNER JOIN `course_teacher`
 ON `courses`.`id` = `course_teacher`.`course_id`
 
 WHERE `course_teacher`.`teacher_id` = 44;
+
+CORREZIONE --- --- ---
+SELECT `courses`.*
+FROM `courses`
+INNER JOIN `course_teacher`
+ON `courses`.`id` = `course_teacher`.`course_id`
+
+INNER JOIN `teachers`
+ON `teachers`.`id` = `course_teacher`.`teacher_id`
+
+WHERE `teacher`.`name` = 'Fulvio'
+AND `teacher`.`surname` = 'Fulvio';
 
 4 ---
 SELECT `students`.`surname`, `students`.`name`, `degrees`.`name`, `departments`.`name`
@@ -82,5 +104,27 @@ WHERE `departments`.`name` = 'Dipartimento di Matematica'
 
 ORDER BY `teachers`.`name`, `teachers`.`surname`;
 
+7---
+SELECT
+    `students`.`registration_number`,
+    `students`.`name`,
+    `students`.`surname`,
+    `courses`.`name` AS `corso`,
+    COUNT(`exam_student`.`vote`) AS `numero_tentativi`
 
+    MAX(`exam_student`.`vote`) AS `voto_massimo`
 
+FROM `students`
+
+INNER JOIN `exam_student`
+ON `students`.`id` = `exam_student`.`student_id`
+
+INNER JOIN `exams`
+ON `exam_student`.`exam_id` = `exams`.`id`
+
+INNER JOIN `courses`
+ON `exams`.`course_id` = `courses`.`id`
+
+GROUP BY `students`.`id`, `courses`.`id`
+
+HAVING `voto_massimo` >= 18
